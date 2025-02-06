@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
 import Layout from "../components/global/Layout";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 function Learn() {
 
@@ -27,7 +27,7 @@ function Learn() {
               console.log("Decoded QR Code:", result.data);
               setQrResult(result.data);
 							if (result.data) {
-								window.location.href = result.data;
+                window.location.href = result.data;
 							}
 
             },
@@ -48,7 +48,10 @@ function Learn() {
 
 	return (
 		<Layout>
-			{error ? <p style={{ color: "red" }}>{error}</p> : <video ref={videoRef} style={{ width: "100%", maxWidth: "400px" }} />}
+      <Link to="/" className="text-decoration-none text-primary">
+        <div>&larr; Kembali</div>
+      </Link>
+			{error ? <p className="mt-3" style={{ color: "red" }}>{error}</p> : <video className="mt-3" ref={videoRef} style={{ width: "100%", maxWidth: "400px" }} />}
       <p><strong>Hasil Scan:</strong> {qrResult || "Belum ada hasil"}</p>
 		</Layout>
 	);
