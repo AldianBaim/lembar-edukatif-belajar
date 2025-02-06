@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
-import Layout from "./components/global/Layout";
+import Layout from "../components/global/Layout";
+import { useNavigate } from "react-router";
 
 function Learn() {
 
 	const videoRef = useRef(null);
   const [qrResult, setQrResult] = useState("");
   const [error, setError] = useState("");
+	const navigate = useNavigate();
 
   useEffect(() => {
     async function checkPermissionsAndStart() {
@@ -24,9 +26,12 @@ function Learn() {
             (result) => {
               console.log("Decoded QR Code:", result.data);
               setQrResult(result.data);
-							window.open(result.data, '_blank');
+							if (result.data) {
+								window.location.href = result.data;
+							}
+
             },
-            { returnDetailedScanResult: true }
+            { returnDetailedScanResult: true, highlightScanRegion: true, highlightCodeOutline: true, highlightScanRegionOutline: true }
           );
 
           qrScanner.start();
