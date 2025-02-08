@@ -38,7 +38,7 @@ function App() {
         <button className="btn-custom rounded-pill p-3 px-5 w-100 w-lg-75 mx-auto mb-3" style={{ backgroundColor: "#EAEAEA" }}>
           <div className="text d-flex align-items-center">
             <img src="/image/question-mark.png" className="me-3" width={40} alt="" />
-            <div className="text-dark">Buat Pertanyaan</div>
+            <div className="text-dark">Tambah Pertanyaan</div>
           </div>
         </button>
       </Link>
