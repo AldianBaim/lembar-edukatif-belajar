@@ -16,7 +16,7 @@ function App() {
         <img src="https://cdn.pixabay.com/photo/2023/10/18/22/47/owl-8325215_960_720.png" width={200} className="mb-5" alt="" />
       </div>
 
-      <Link to="/learn" className="text-decoration-none text-dark">
+      <Link to="/prescan" className="text-decoration-none text-dark">
         <button className="btn-custom rounded-pill p-3 px-5 w-100 w-lg-75 mx-auto mb-3" style={{ backgroundColor: "#A1DDD1" }}>
           <div className="text d-flex align-items-center">
             <img src="/image/qr-code.png" className="me-3" width={40} alt="" />
@@ -25,11 +25,20 @@ function App() {
         </button>
       </Link>
 
-      <Link to="/challenge" className="text-decoration-none text-dark">
+      <Link to="/quiz" className="text-decoration-none text-dark">
         <button className="btn-custom rounded-pill p-3 px-5 w-100 w-lg-75 mx-auto mb-3" style={{ backgroundColor: "#ECCBCD" }}>
           <div className="text d-flex align-items-center">
             <img src="/image/archery.png" className="me-3" width={40} alt="" />
             <div className="text-dark">Tantangan</div>
+          </div>
+        </button>
+      </Link>
+
+      <Link to="/quiz/add" className="text-decoration-none text-dark">
+        <button className="btn-custom rounded-pill p-3 px-5 w-100 w-lg-75 mx-auto mb-3" style={{ backgroundColor: "#EAEAEA" }}>
+          <div className="text d-flex align-items-center">
+            <img src="/image/question-mark.png" className="me-3" width={40} alt="" />
+            <div className="text-dark">Buat Pertanyaan</div>
           </div>
         </button>
       </Link>

@@ -11,10 +11,6 @@ export default defineConfig({
       devOptions: {
         enabled: true,
       },
-      workbox: {
-        clientsClaim: true,
-        skipWaiting: true, // Pastikan update langsung terjadi
-      },
       manifest: {
         name: "Lembar Edukatif Belajar",
         short_name: "Lembar Edukatif",
