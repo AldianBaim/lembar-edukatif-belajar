@@ -47,7 +47,7 @@ export default function Quiz() {
   };
 
   if (questions.length === 0) {
-    return <div className="text-center mt-5"><h3>Loading questions...</h3></div>;
+    return <div className="text-center"><h3>Loading questions...</h3></div>;
   }
   console.log(currentQuestion);
   return (
