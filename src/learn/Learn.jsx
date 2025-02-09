@@ -27,7 +27,7 @@ function Learn() {
               console.log("Decoded QR Code:", result.data);
               setQrResult(result.data);
 							if (result.data) {
-                window.location.href = result.data;
+                navigate(result.data);
 							}
 
             },

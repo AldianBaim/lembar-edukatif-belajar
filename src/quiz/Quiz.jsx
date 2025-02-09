@@ -3,6 +3,7 @@ import Layout from "../components/global/Layout.jsx";
 import { db } from "../firebase.js";
 import { collection, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 export default function Quiz() {
 	const [questions, setQuestions] = useState([]);
@@ -19,7 +20,8 @@ export default function Quiz() {
           id: doc.id,
           ...doc.data(),
         }));
-        setQuestions(quizData);
+        // Randomize array object
+        setQuestions(quizData.sort(() => Math.random() - 0.5));
       } catch (error) {
         console.error("Error fetching questions:", error);
       }
@@ -30,6 +32,47 @@ export default function Quiz() {
 
   const handleAnswerSelect = (option) => {
     setSelectedAnswer(option);
+
+    // Tampilkan loading dulu
+    Swal.fire({
+      title: "Memeriksa jawaban...",
+      allowOutsideClick: false,
+      didOpen: () => {
+          Swal.showLoading(); // Menampilkan loading spinner
+      }
+    });
+
+    setTimeout(() => {
+      Swal.close(); // Tutup loading setelah 1.5 detik
+
+      if (option === questions[currentQuestion].correctAnswer) {
+        setScore((prevScore) => prevScore + 1);
+
+        // Jika sudah sampai akhir maka text jadi finish
+        const text = currentQuestion + 1 === questions.length ? "Cek Nilai Akhir" : "Pertanyaan Selanjutnya";
+        Swal.fire({
+          icon: "success",
+          title: "Jawaban Benar!",
+          showConfirmButton: true,
+          confirmButtonText: text,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            handleNextQuestion();
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Jawaban kamu salah nih",
+          showConfirmButton: true,
+          confirmButtonText: "Pertanyaan Selanjutnya",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            handleNextQuestion();
+          }
+        });
+      }
+    }, 1500); // Delay 1.5 detik sebelum tampil hasil
   };
 
   const handleNextQuestion = () => {
@@ -49,7 +92,7 @@ export default function Quiz() {
   if (questions.length === 0) {
     return <div className="text-center"><h3>Loading questions...</h3></div>;
   }
-  console.log(currentQuestion);
+
   return (
     <Layout>
       {!isFinished ? (
@@ -71,19 +114,22 @@ export default function Quiz() {
                 className={`btn btn-block my-2 ${selectedAnswer === option ? "btn-primary" : "btn-outline-primary"}`}
                 onClick={() => handleAnswerSelect(option)}
               >
-                {option}
+                {questions[currentQuestion]?.optionType === "image" ? <img src={option} width={100} /> : option }
               </button>
             ))
           ) : (
             <p>Loading questions...</p> // ✅ Tampilkan loading jika data belum siap
           )}
-          <button
-            className="btn btn-success mt-3"
-            onClick={handleNextQuestion}
-            disabled={selectedAnswer === null}
-          >
-            {currentQuestion + 1 === questions.length ? "Finish Quiz" : "Next Question"}
-          </button>
+          {/* {currentQuestion + 1 === questions.length && (
+            <button
+              className="btn btn-success mt-3"
+              onClick={handleNextQuestion}
+              disabled={selectedAnswer === null}
+            >
+              Finish Quiz
+            </button>
+            )
+          } */}
         </div>
       ) : (
         <div className="card shadow-lg p-4 text-center">

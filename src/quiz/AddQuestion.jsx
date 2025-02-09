@@ -8,6 +8,7 @@ const AddQuestion = () => {
   const [options, setOptions] = useState(["", "", "", ""]);
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [type, setType] = useState("text");
+  const [optionType, setOptionType] = useState("text");
   const [embed, setEmbed] = useState(null);
 
   const handleOptionChange = (index, value) => {
@@ -29,7 +30,8 @@ const AddQuestion = () => {
         options,
         correctAnswer,
         type,
-        embed
+        embed,
+				optionType
       });
       alert("Pertanyaan berhasil ditambahkan!");
       setQuestion("");
@@ -37,6 +39,7 @@ const AddQuestion = () => {
       setCorrectAnswer("");
       setType("");
       setEmbed("");
+      setOptionType("");
     } catch (error) {
       console.error("Error menambahkan pertanyaan:", error);
     }
@@ -57,11 +60,12 @@ const AddQuestion = () => {
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             required
+            placeholder="Input pertanyaan"
           />
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Type:</label>
+          <label className="form-label">Question Type:</label>
           <select onChange={(e) => setType(e.target.value)} value={type} className="form-select">
             <option value="text">Text</option>
             <option value="image">Image</option>
@@ -76,7 +80,16 @@ const AddQuestion = () => {
             className="form-control"
             value={embed}
             onChange={(e) => setEmbed(e.target.value)}
+            placeholder={type === "image" ? "Input URL gambar" : type === "video" ? "Input URL video" : ""}
           />
+        </div>
+
+				<div className="mb-3">
+          <label className="form-label">Option Type:</label>
+          <select onChange={(e) => setOptionType(e.target.value)} value={optionType} className="form-select">
+            <option value="text">Text</option>
+            <option value="image">Image</option>
+          </select>
         </div>
 
         {options.map((option, index) => (
@@ -88,6 +101,7 @@ const AddQuestion = () => {
               value={option}
               onChange={(e) => handleOptionChange(index, e.target.value)}
               required
+              placeholder={`${optionType === "image" ? "Input URL gambar" : "Input jawaban"}`}
             />
           </div>
         ))}
