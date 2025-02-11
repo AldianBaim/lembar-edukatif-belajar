@@ -15,6 +15,9 @@ import Login from "./auth/Login.jsx";
 import Dashboard from "./admin/Dashboard.jsx";
 import QuizzesModule from "./admin/quiz/index.jsx";
 import ProtectedRoute from "./auth/ProtectedRoute.jsx";
+import UsersModule from "./admin/users/index.jsx";
+import LessonsModule from "./admin/lessons/index.jsx";
+import ForgotPassword from "./auth/ForgotPassword.jsx";
 
 const LoadingScreen = () => (
   <div className="loading-container">
@@ -35,9 +38,12 @@ createRoot(document.getElementById("root")).render(
           <Route path="/quiz/add" element={<AddQuestion />} />
           <Route path="/learn/:slug" element={<Detail />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/admin" element={<ProtectedRoute />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="dashboard/quizzes" element={<QuizzesModule />} />
+            <Route path="dashboard/users" element={<UsersModule />} />
+            <Route path="dashboard/lessons" element={<LessonsModule />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

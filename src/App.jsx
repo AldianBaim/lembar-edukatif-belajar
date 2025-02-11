@@ -5,7 +5,7 @@ function App() {
   return (
     <Layout>
       <div className="text-end">
-        <Link to="/setting" className="text-decoration-none text-dark">
+        <Link to="/forgot-password" className="text-decoration-none text-dark">
           <img src="/image/setting.png" width={30} alt="" />
         </Link>
       </div>

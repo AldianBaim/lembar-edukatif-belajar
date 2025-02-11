@@ -19,7 +19,14 @@ export default function Login() {
 
     if (email === "admin@gmail.com" && password === "admin") {
       localStorage.setItem("token", "admin");
-      navigate("/admin/dashboard");
+      Swal.fire({
+        icon: "success",
+        title: "Login Berhasil",
+        text: "Selamat datang, admin!",
+        timer: 2000,
+      }).then(() => {
+        navigate("/admin/dashboard");
+      });
     } else {
       Swal.fire({
         icon: "error",
@@ -34,7 +41,9 @@ export default function Login() {
       <h3 className="text-center mb-4">Login</h3>
       <form className="w-100" onSubmit={login}>
         <div className="form-group mb-3">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
           <input
             type="email"
             className="form-control"
@@ -44,9 +53,11 @@ export default function Login() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
           <input
-            type="text"
+            type="password"
             className="form-control"
             id="password"
             placeholder="Enter password"
