@@ -17,7 +17,7 @@ function QuizzesModule() {
   const [showForm, setShowForm] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [question, setQuestion] = useState("");
-  const [options, setOptions] = useState(["", "", "", ""]);
+  const [options, setOptions] = useState(["", "", ""]);
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [type, setType] = useState("text");
   const [optionType, setOptionType] = useState("text");
@@ -45,7 +45,7 @@ function QuizzesModule() {
 
   const resetForm = () => {
     setQuestion("");
-    setOptions(["", "", "", ""]);
+    setOptions(["", "", ""]);
     setCorrectAnswer("");
     setType("text");
     setEmbed(null);

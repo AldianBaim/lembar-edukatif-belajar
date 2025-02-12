@@ -1,60 +1,61 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Layout from "./components/global/Layout";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [showAdmin, setShowAdmin] = useState(false);
+  const navigate = useNavigate();
+  // Check localstorage]
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("token")).role == "admin") {
+      setShowAdmin(true);
+    }
+  }, []);
+
   return (
     <Layout>
-      <div className="text-end">
-        <Link to="/forgot-password" className="text-decoration-none text-dark">
-          <img src="/image/setting.png" width={30} alt="" />
-        </Link>
-      </div>
       <div className="text-center">
-        <h5>Lembar Edukatif</h5>
-        <h3 className="fw-bold mb-5">Mengenal Alfabet</h3>
+        <h6>Lembar Edukatif</h6>
+        <h2 className="fw-bold mb-5">Mengenal Alfabet</h2>
         <img
-          src="https://cdn.pixabay.com/photo/2023/10/18/22/47/owl-8325215_960_720.png"
-          width={200}
+          src="/image/maskot-lembaredukatif.png"
+          width={250}
           className="mb-5"
           alt=""
         />
       </div>
 
-      <Link to="/prescan" className="text-decoration-none text-dark">
+      <Link to="/prescan" className="text-decoration-none">
         <button
-          className="btn-custom rounded-pill p-3 px-5 w-100 w-lg-75 mx-auto mb-3"
-          style={{ backgroundColor: "#A1DDD1" }}
+          className="btn-yellow border-0 p-3 py-4 px-5 w-100 w-lg-75 mx-auto mb-3"
+          style={{ borderRadius: "20px" }}
         >
-          <div className="text d-flex align-items-center">
-            <img src="/image/qr-code.png" className="me-3" width={40} alt="" />
-            <div className="text-dark">Mulai Belajar</div>
-          </div>
+          <div className="text-muted">BELAJAR</div>
         </button>
       </Link>
 
-      <Link to="/quiz" className="text-decoration-none text-dark">
+      <Link to="/quiz" className="text-decoration-none">
         <button
-          className="btn-custom rounded-pill p-3 px-5 w-100 w-lg-75 mx-auto mb-3"
-          style={{ backgroundColor: "#ECCBCD" }}
+          className="btn-green border-0 p-3 py-4 px-5 w-100 w-lg-75 mx-auto mb-3"
+          style={{ borderRadius: "20px" }}
         >
-          <div className="text d-flex align-items-center">
-            <img src="/image/archery.png" className="me-3" width={40} alt="" />
-            <div className="text-dark">Tantangan</div>
-          </div>
+          <div className="text-muted">TANTANGAN</div>
         </button>
       </Link>
 
-      <Link to="/login" className="text-decoration-none text-dark">
-        <button
-          className="btn-custom rounded-pill p-3 px-5 w-100 w-lg-75 mx-auto mb-3"
-          style={{ backgroundColor: "#EAEAEA" }}
-        >
-          <div className="text d-flex align-items-center">
-            <img src="/image/admin.png" className="me-3" width={40} alt="" />
-            <div className="text-dark">Admin</div>
-          </div>
-        </button>
-      </Link>
+      {showAdmin && (
+        <Link to="/login" className="text-decoration-none text-dark">
+          <button
+            className="btn-custom rounded-pill p-3 px-5 w-100 w-lg-75 mx-auto mb-3"
+            style={{ backgroundColor: "#EAEAEA" }}
+          >
+            <div className="text d-flex align-items-center">
+              <img src="/image/admin.png" className="me-3" width={40} alt="" />
+              <div className="text-dark">Admin</div>
+            </div>
+          </button>
+        </Link>
+      )}
     </Layout>
   );
 }

@@ -7,6 +7,8 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  query,
+  where, // Import where
 } from "../../firebase"; // Pastikan path ini benar
 import Layout from "../../components/global/Layout";
 import Swal from "sweetalert2";
@@ -63,14 +65,26 @@ function LessonsModule() {
     try {
       if (editMode) {
         // Update existing lesson
-        await updateDoc(doc(db, "lessons", currentId), {
-          id,
-          title,
-          type,
-          content,
-          source,
-          description,
+
+        //Query snapshot
+        const lessonCollection = collection(db, "lessons");
+        const q = query(lessonCollection, where("id", "==", currentId));
+
+        //Get Data
+        const querySnapshot = await getDocs(q);
+
+        // looping data
+        querySnapshot.forEach(async (doc) => {
+          await updateDoc(doc.ref, {
+            id,
+            title,
+            type,
+            content,
+            source,
+            description,
+          });
         });
+
         Swal.fire("Berhasil!", "Data pelajaran berhasil diubah.", "success");
       } else {
         // Create new lesson
@@ -156,7 +170,7 @@ function LessonsModule() {
             Tambah Pelajaran
           </button>
         </div>
-
+        ...{" "}
         {showForm && (
           <form onSubmit={handleSubmit} className="card p-4 shadow mb-3">
             {error && <div className="alert alert-danger">{error}</div>}
@@ -242,7 +256,6 @@ function LessonsModule() {
             </div>
           </form>
         )}
-
         {!showForm && (
           <div className="table-responsive">
             <table className="table mt-3">

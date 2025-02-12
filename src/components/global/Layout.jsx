@@ -1,11 +1,55 @@
+import { Link, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
-function Layout({children}) {
+function Layout({ children }) {
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("token");
+    Swal.fire({
+      icon: "success",
+      title: "Logout Berhasil",
+      timer: 2000,
+      showConfirmButton: false,
+    }).then(() => {
+      navigate("/login");
+    });
+  };
 
-return (
+  return (
     <div className="row justify-content-center p-3">
-			<div className="col-lg-4 py-3">
-				{children}
-			</div>
+      <div className="col-lg-4 py-3">
+        <div className="text-end">
+          <div className="dropdown">
+            <button
+              className="btn dropdown"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img src="/image/setting.png" width={20} alt="" />
+            </button>
+            <ul className="dropdown-menu bg-orange">
+              <li className="border-bottom">
+                <Link
+                  to="/change-password"
+                  className="dropdown-item text-decoration-none text-white"
+                >
+                  Ganti Password
+                </Link>
+              </li>
+              <li>
+                <button
+                  className="dropdown-item text-decoration-none text-white"
+                  onClick={logout}
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        {children}
+      </div>
     </div>
   );
 }

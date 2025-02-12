@@ -2,6 +2,9 @@ import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.css";
 
+// Import popper js
+import "bootstrap/dist/js/bootstrap.bundle.min";
+
 import "./assets/style/index.css";
 import App from "./App.jsx";
 import { BrowserRouter, Route, Routes } from "react-router";
@@ -18,6 +21,7 @@ import ProtectedRoute from "./auth/ProtectedRoute.jsx";
 import UsersModule from "./admin/users/index.jsx";
 import LessonsModule from "./admin/lessons/index.jsx";
 import ForgotPassword from "./auth/ForgotPassword.jsx";
+import ChangePassword from "./auth/ChangePassword.jsx";
 
 const LoadingScreen = () => (
   <div className="loading-container">
@@ -31,21 +35,31 @@ createRoot(document.getElementById("root")).render(
     <Suspense fallback={<LoadingScreen />}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/learn" element={<Learn />} />
-          <Route path="/prescan" element={<PreScan />} />
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/quiz/add" element={<AddQuestion />} />
-          <Route path="/learn/:slug" element={<Detail />} />
+          {/* Rute login yang tidak dilindungi */}
           <Route path="/login" element={<Login />} />
+          <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/admin" element={<ProtectedRoute />}>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="dashboard/quizzes" element={<QuizzesModule />} />
-            <Route path="dashboard/users" element={<UsersModule />} />
-            <Route path="dashboard/lessons" element={<LessonsModule />} />
+          <Route path="/admin/dashboard/users" element={<UsersModule />} />
+          {/* Semua rute lainnya dilindungi */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<App />} />
+            <Route path="/learn" element={<Learn />} />
+            <Route path="/prescan" element={<PreScan />} />
+            <Route path="/quiz" element={<Quiz />} />
+            <Route path="/quiz/add" element={<AddQuestion />} />
+            <Route path="/learn/:slug" element={<Detail />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route
+              path="/admin/dashboard/quizzes"
+              element={<QuizzesModule />}
+            />
+            <Route path="/admin/dashboard/users" element={<UsersModule />} />
+            <Route
+              path="/admin/dashboard/lessons"
+              element={<LessonsModule />}
+            />
+            <Route path="*" element={<NotFound />} />
           </Route>
-          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </Suspense>

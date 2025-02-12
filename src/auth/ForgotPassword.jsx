@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth"; // Hanya import getAuth
 import {
   db,
@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import Layout from "../components/global/Layout";
+import bcrypt from "bcryptjs";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -48,9 +49,8 @@ function ForgotPassword() {
       const userRef = doc(db, "users", userDoc.id);
 
       // **2. Update password di collection `users` (TANPA ENKRIPSI!)**
-      // !!! SANGAT TIDAK AMAN !!!
       await updateDoc(userRef, {
-        password: newPassword, // **PASSWORD DISIMPAN TANPA ENKRIPSI!**
+        password: bcrypt.hashSync(newPassword, 10), // **PASSWORD DISIMPAN TANPA ENKRIPSI!**
         lastPasswordReset: new Date(),
       });
 
@@ -68,10 +68,24 @@ function ForgotPassword() {
     }
   };
 
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("token"));
+    if (data) {
+      setEmail(data.email);
+    }
+  }, []);
+
   return (
     <Layout>
-      <div className="card p-4 shadow">
-        <h2 className="text-center mb-4">Lupa Password</h2>
+      <div className="">
+        <div className="text-center mb-3">
+          <h6>Forgot Password</h6>
+          <img
+            src="/image/maskot-lembaredukatif.png"
+            width={200}
+            alt="Mascot"
+          />
+        </div>
         {error && <div className="alert alert-danger">{error}</div>}
         {message && <div className="alert alert-success">{message}</div>}
         <form onSubmit={handleSubmit}>
@@ -96,13 +110,15 @@ function ForgotPassword() {
             />
           </div>
           <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-orange">
               Ubah Password
             </button>
           </div>
         </form>
-        <div className="mt-3 text-center">
-          <Link to="/">Kembali ke Beranda</Link>
+        <div className="mt-3 text-center text-dark">
+          <Link to="/" className="text-dark text-decoration-none">
+            Kembali ke Beranda
+          </Link>
         </div>
       </div>
     </Layout>

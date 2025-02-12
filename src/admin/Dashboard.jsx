@@ -3,12 +3,6 @@ import Layout from "../components/global/Layout";
 import { Link, useNavigate } from "react-router";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
   return (
     <Layout>
       <Link to="/" className="text-decoration-none text-primary mb-1">
@@ -35,14 +29,6 @@ export default function Dashboard() {
       >
         Kelola Quizzes
       </Link>
-      {/* Logout button */}
-      <button
-        type="button"
-        onClick={() => logout()}
-        className="btn btn-sm btn-block btn-outline-danger"
-      >
-        Logout
-      </button>
     </Layout>
   );
 }

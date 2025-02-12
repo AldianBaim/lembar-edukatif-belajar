@@ -11,6 +11,7 @@ import {
 import Layout from "../../components/global/Layout";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
+import bcrypt from "bcryptjs";
 
 function UsersModule() {
   const [users, setUsers] = useState([]);
@@ -18,7 +19,7 @@ function UsersModule() {
   const [editMode, setEditMode] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(""); // Password sementara untuk input
   const [role, setRole] = useState("user"); // Default role
   const [currentId, setCurrentId] = useState(null);
   const [error, setError] = useState(null);
@@ -51,31 +52,47 @@ function UsersModule() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !email || !password || !role) {
-      setError("Mohon lengkapi semua data!");
+    if (!name || !email || !role) {
+      setError("Mohon lengkapi semua data (kecuali password saat update)!");
+      return;
+    }
+
+    if (!editMode && !password) {
+      setError("Password wajib diisi saat menambahkan pengguna baru!");
       return;
     }
 
     try {
+      let userDataToUpdate = {
+        name,
+        email,
+        role,
+        updated_at: new Date(),
+      };
+
+      if (password) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        userDataToUpdate.password = hashedPassword;
+      }
+
       if (editMode) {
         // Update existing user
-        await updateDoc(doc(db, "users", currentId), {
-          name,
-          email,
-          role,
-          updated_at: new Date(),
-        });
+        await updateDoc(doc(db, "users", currentId), userDataToUpdate);
         Swal.fire("Berhasil!", "Data pengguna berhasil diubah.", "success");
       } else {
-        // Create new user
-        await addDoc(collection(db, "users"), {
+        // Create new user (hash password selalu)
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        userDataToUpdate = {
           name,
           email,
-          password, // PERHATIAN: Jangan simpan password secara langsung! Gunakan hashing.
+          password: hashedPassword,
           role,
           created_at: new Date(),
           updated_at: new Date(),
-        });
+        };
+        await addDoc(collection(db, "users"), userDataToUpdate);
         Swal.fire("Berhasil!", "Pengguna berhasil ditambahkan.", "success");
       }
       await fetchUsers(); // Reload data
@@ -96,8 +113,7 @@ function UsersModule() {
     setName(user.name);
     setEmail(user.email);
     setRole(user.role);
-    setPassword(user.password);
-    // Password tidak diisi saat edit, pertimbangkan logika yang lebih aman.
+    setPassword(""); // Kosongkan kolom password
   };
 
   const handleDelete = async (id) => {
@@ -180,8 +196,8 @@ function UsersModule() {
                 className="form-control"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
                 placeholder="Input password"
+                required={!editMode} // Password wajib saat tambah
               />
             </div>
             <div className="mb-3">
