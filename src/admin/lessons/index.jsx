@@ -152,12 +152,12 @@ function LessonsModule() {
     <Layout>
       <Link
         to="/admin/dashboard"
-        className="text-decoration-none text-primary mb-1"
+        className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "45px"}}
       >
-        <div>&larr; Kembali</div>
+        <img src="/image/arrow-back.svg" width={25}/>
       </Link>
-      <div className="">
-        <h3 className="mb-4 mt-3">Kelola Pelajaran</h3>
+      <div className="mt-3">
+        <h3 className="mb-4">Kelola Pelajaran</h3>
         <div className="text-end">
           <button
             onClick={() => {

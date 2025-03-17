@@ -25,7 +25,7 @@ function Layout({ children }) {
   };
 
   return (
-    <div className="row justify-content-center p-3">
+    <div className="row justify-content-center p-3 bg-primary position-relative" style={{ minHeight: "100vh" }}>
       <div className="col-lg-4 py-3">
         {isLoggedIn && (
           <div className="text-end">
@@ -36,7 +36,7 @@ function Layout({ children }) {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img src="/image/setting.png" width={20} alt="" />
+                <img src="/image/setting.png" width={30} alt="" />
               </button>
               <ul className="dropdown-menu bg-orange">
                 <li className="border-bottom">

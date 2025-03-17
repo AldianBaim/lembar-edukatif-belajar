@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import Layout from "../components/global/Layout";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { db } from "../firebase"; // Import Firebase database instance
+import { db } from "../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -20,8 +20,7 @@ export default function Login() {
   const login = async (event) => {
     event.preventDefault();
 
-    if (email === "admin@gmail.com" && password === "admin") {
-      localStorage.setItem("token", "admin");
+    if (phone === "085624865065" && password === "admin") {
       Swal.fire({
         icon: "success",
         title: "Login Berhasil",
@@ -31,29 +30,28 @@ export default function Login() {
       }).then(() => {
         const token = {
           name: "Admin",
-          email: "admin@gmail.com",
+          phone_number: "085624865066",
           role: "admin",
         };
         localStorage.setItem("token", JSON.stringify(token));
         navigate("/");
       });
     } else {
-      // Check firebase users collection
       try {
         const usersRef = collection(db, "users");
-        const q = query(usersRef, where("email", "==", email)); // Query by email only
+        const q = query(usersRef, where("phone_number", "==", phone));
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
           Swal.fire({
             icon: "error",
             title: "Login Gagal",
-            text: "Akun tidak ditemukan. Periksa email dan password Anda.",
+            text: "Akun tidak ditemukan. Periksa nomor HP dan password Anda.",
           });
         } else {
-          const userDoc = querySnapshot.docs[0]; // Get the first matching document
+          const userDoc = querySnapshot.docs[0];
           const userData = userDoc.data();
-          const hashedPassword = userData.password; // Assuming the hashed password field is named "password"
+          const hashedPassword = userData.password;
 
           bcrypt.compare(password, hashedPassword, function (err, result) {
             if (err) {
@@ -64,10 +62,9 @@ export default function Login() {
                 text: "Terjadi kesalahan saat memverifikasi kata sandi.",
               });
             } else if (result === true) {
-              // Passwords match!
               const token = {
                 name: userData.name,
-                email: userData.email,
+                phone_number: userData.phone_number,
                 role: userData.role,
               };
               localStorage.setItem("token", JSON.stringify(token));
@@ -81,7 +78,6 @@ export default function Login() {
                 navigate("/");
               });
             } else {
-              // Passwords don't match
               Swal.fire({
                 icon: "error",
                 title: "Login Gagal",
@@ -105,33 +101,35 @@ export default function Login() {
     <Layout>
       <div className="text-center mb-3">
         <h6>Lembar Edukatif</h6>
-        <img src="/image/maskot-lembaredukatif.png" width={200} alt="Mascot" />
+        <img src="/image/maskot-lembaredukatif.png" width={250} alt="Mascot" />
       </div>
       <form className="w-100" onSubmit={login}>
         <div className="form-group mb-3">
           <input
-            type="email"
-            className="form-control"
-            id="email"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
+            type="tel"
+            className="form-control border-0 p-3 rounded-4"
+            id="phone"
+            placeholder="Masukkan nomor HP"
+            pattern="[0-9]*"
+            onChange={(e) => setPhone(e.target.value)}
             required
           />
         </div>
         <div className="form-group mb-2">
           <input
             type="password"
-            className="form-control"
+            className="form-control border-0 p-3 rounded-4"
             id="password"
             placeholder="Enter password"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <button type="submit" className="btn w-100 btn-orange mt-3">
+        <button type="submit" className="btn w-100 btn-orange mt-3 rounded-4 p-3">
           Login
         </button>
       </form>
+      <div className="text-center mt-5">Belum punya akun? <a href="https://lembaredukatif.id" className="text-decoration-none fw-bold text-dark">Daftar sekarang</a></div>
     </Layout>
   );
 }

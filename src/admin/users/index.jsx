@@ -19,8 +19,9 @@ function UsersModule() {
   const [editMode, setEditMode] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(""); // Password sementara untuk input
-  const [role, setRole] = useState("user"); // Default role
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
   const [currentId, setCurrentId] = useState(null);
   const [error, setError] = useState(null);
 
@@ -45,6 +46,7 @@ function UsersModule() {
   const resetForm = () => {
     setName("");
     setEmail("");
+    setPhone("");
     setPassword("");
     setRole("user");
     setError(null);
@@ -52,7 +54,7 @@ function UsersModule() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !email || !role) {
+    if (!name || !email || !phone || !role) {
       setError("Mohon lengkapi semua data (kecuali password saat update)!");
       return;
     }
@@ -66,6 +68,7 @@ function UsersModule() {
       let userDataToUpdate = {
         name,
         email,
+        phone_number: phone,
         role,
         updated_at: new Date(),
       };
@@ -87,6 +90,7 @@ function UsersModule() {
         userDataToUpdate = {
           name,
           email,
+          phone_number: phone,
           password: hashedPassword,
           role,
           created_at: new Date(),
@@ -112,8 +116,9 @@ function UsersModule() {
     setCurrentId(user.id);
     setName(user.name);
     setEmail(user.email);
+    setPhone(user.phone_number || "");
     setRole(user.role);
-    setPassword(""); // Kosongkan kolom password
+    setPassword("");
   };
 
   const handleDelete = async (id) => {
@@ -145,12 +150,12 @@ function UsersModule() {
     <Layout>
       <Link
         to="/admin/dashboard"
-        className="text-decoration-none text-primary mb-1"
+        className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "45px"}}
       >
-        <div>&larr; Kembali</div>
+        <img src="/image/arrow-back.svg" width={25}/>
       </Link>
       <div className="mt-3">
-        <h3 className="mb-4 mt-3">Kelola Pengguna</h3>
+        <h3 className="mb-4">Kelola Pengguna</h3>
         <div className="text-end">
           <button
             onClick={() => {
@@ -187,6 +192,18 @@ function UsersModule() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="Input email"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Phone Number:</label>
+              <input
+                type="tel"
+                className="form-control"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                placeholder="Input phone number"
+                pattern="[0-9]*"
               />
             </div>
             <div className="mb-3">
@@ -237,6 +254,7 @@ function UsersModule() {
                 <tr>
                   <th>No</th>
                   <th>Nama</th>
+                  <th>Phone</th>
                   <th>Role</th>
                   <th>Action</th>
                 </tr>
@@ -246,6 +264,7 @@ function UsersModule() {
                   <tr key={user.id}>
                     <td>{index + 1}</td>
                     <td>{user.name}</td>
+                    <td>{user.phone}</td>
                     <td>{user.role}</td>
                     <td>
                       <button

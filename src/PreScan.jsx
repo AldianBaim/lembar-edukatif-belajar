@@ -5,8 +5,8 @@ export default function PreScan() {
   return (
     <Layout>
       <div className="containter">
-        <Link to="/" className="text-decoration-none text-primary">
-          <div>&larr; Kembali</div>
+        <Link to="/" className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "45px"}}>
+          <img src="/image/arrow-back.svg" width={25}/>
         </Link>
 
         <div className="text-center text-muted mt-3">

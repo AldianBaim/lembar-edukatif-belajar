@@ -136,12 +136,12 @@ function QuizzesModule() {
     <Layout>
       <Link
         to="/admin/dashboard"
-        className="text-decoration-none text-primary mb-1"
+        className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "45px"}}
       >
-        <div>&larr; Kembali</div>
+        <img src="/image/arrow-back.svg" width={25}/>
       </Link>
-      <div className="">
-        <h3 className="mb-4 mt-3">Kelola Quiz</h3>
+      <div className="mt-3">
+        <h3 className="mb-4">Kelola Quiz</h3>
         <div className="text-end">
           <button
             onClick={() => {
@@ -179,6 +179,7 @@ function QuizzesModule() {
                 <option value="text">Text</option>
                 <option value="image">Image</option>
                 <option value="video">Video</option>
+                <option value="audio">Audio</option>
               </select>
             </div>
             <div className="mb-3">
@@ -193,6 +194,8 @@ function QuizzesModule() {
                     ? "Input URL gambar"
                     : type === "video"
                     ? "Input URL video"
+                    : type === "audio"
+                    ? "Input URL audio"
                     : ""
                 }
               />
@@ -271,19 +274,29 @@ function QuizzesModule() {
                 {quizzes.map((quiz, index) => (
                   <tr key={quiz.id}>
                     <td>{index + 1}</td>
-                    <td>{quiz.question}</td>
                     <td>
+                      {quiz.question}
+                      {quiz.type === "audio" && quiz.embed && (
+                        <div className="mt-2">
+                          <audio controls>
+                            <source src={quiz.embed} type="audio/mpeg" />
+                            Your browser does not support the audio element.
+                          </audio>
+                        </div>
+                      )}
+                    </td>
+                    <td width={100}>
                       <button
                         onClick={() => handleEdit(quiz)}
-                        className="btn btn-sm btn-primary me-2 mb-1"
+                        className="btn btn-sm btn-primary me-1 mb-1"
                       >
-                        Edit
+                        <i className="bi bi-pencil"></i>
                       </button>
                       <button
                         onClick={() => handleDelete(quiz.id)}
                         className="btn btn-sm btn-danger mb-1"
                       >
-                        Delete
+                        <i className="bi bi-trash"></i>
                       </button>
                     </td>
                   </tr>

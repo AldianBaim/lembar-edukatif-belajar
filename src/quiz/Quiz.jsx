@@ -100,7 +100,7 @@ export default function Quiz() {
         const text =
           currentQuestion + 1 === questions.length
             ? "Cek Nilai Akhir"
-            : "Pertanyaan Selanjutnya";
+            : "Selanjutnya";
         Swal.fire({
           icon: "success",
           title: "Jawaban Benar!",
@@ -122,7 +122,7 @@ export default function Quiz() {
           title: "Jawaban kamu salah nih",
           showConfirmButton: true,
           confirmButtonColor: "#de703a",
-          confirmButtonText: "Pertanyaan Selanjutnya",
+          confirmButtonText: "Selanjutnya",
         }).then((result) => {
           if (result.isConfirmed) {
             handleNextQuestion();
@@ -189,20 +189,20 @@ export default function Quiz() {
         src="/audio/congrats.mp3"
         preload="auto"
       ></audio>
-
+      <Link to="/" className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "45px"}}>
+        <img src="/image/arrow-back.svg" width={25}/>
+      </Link>
       {!isFinished ? (
-        <div className="card p-1 border-0">
-          <Link to="/" className="text-decoration-none text-primary mb-1">
-            <div>&larr; Kembali</div>
-          </Link>
+        <div className="mt-3 card bg-primary p-1 border-0">
           <div className="mt-3 mb-4">
             <h6 className="text-muted">
               Tantangan {currentQuestion + 1} of {questions.length}
             </h6>
             <div
-              className="progress"
+              className="progress mt-3"
               role="progressbar"
               aria-label="Basic example"
+              style={{backgroundColor: "#D9D9D9", height: "10px"}}
             >
               <div
                 className="progress-bar bg-orange"
@@ -212,6 +212,8 @@ export default function Quiz() {
               ></div>
             </div>
           </div>
+
+          {/* If exist question type video */}
           {questions[currentQuestion]?.type === "video" && (
             <div className="ratio ratio-16x9">
               <iframe
@@ -222,6 +224,17 @@ export default function Quiz() {
               ></iframe>
             </div>
           )}
+
+          {/* If exist question type audio */}
+          {questions[currentQuestion]?.type === "audio" && (
+            <audio
+              controls
+              src={questions[currentQuestion]?.embed}
+              style={{ width: "100%" }}
+            ></audio>
+          )}
+
+          {/* If exist question type image */}
           {questions[currentQuestion]?.type === "image" && (
             <img
               className="w-100"
@@ -229,6 +242,7 @@ export default function Quiz() {
               alt={questions[currentQuestion]?.question}
             />
           )}
+          
           <h5 className="my-4 text-muted">
             {questions[currentQuestion].question}
           </h5>

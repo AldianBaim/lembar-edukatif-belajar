@@ -25,21 +25,21 @@ function App() {
         />
       </div>
 
-      <Link to="/prescan" className="text-decoration-none">
+      <Link to="/learn" className="text-decoration-none">
         <button
-          className="btn-yellow border-0 p-3 py-4 px-5 w-100 w-lg-75 mx-auto mb-3"
-          style={{ borderRadius: "20px" }}
+          className="btn border-0 p-3 py-5 px-5 w-100 w-lg-75 mx-auto mb-3"
+          style={{ borderRadius: "20px", backgroundColor: "#A1C265" }}
         >
-          <div className="text-muted">BELAJAR</div>
+          <div className="text-white">BELAJAR</div>
         </button>
       </Link>
 
       <Link to="/quiz" className="text-decoration-none">
         <button
-          className="btn-green border-0 p-3 py-4 px-5 w-100 w-lg-75 mx-auto mb-3"
-          style={{ borderRadius: "20px" }}
+          className="btn border-0 p-3 py-5 px-5 w-100 w-lg-75 mx-auto mb-3"
+          style={{ borderRadius: "20px", backgroundColor: "#EDAD43"  }}
         >
-          <div className="text-muted">TANTANGAN</div>
+          <div className="text-white">TANTANGAN</div>
         </button>
       </Link>
 
