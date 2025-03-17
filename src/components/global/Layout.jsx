@@ -7,7 +7,8 @@ function Layout({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    const checkToken = localStorage.getItem("token");
+    if (checkToken) {
       setIsLoggedIn(true);
     }
   }, []);
