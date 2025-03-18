@@ -31,6 +31,7 @@ export default function Login() {
         const token = {
           name: "Admin",
           phone_number: "085624865066",
+          email: "admin@gmail.com",
           role: "admin",
         };
         localStorage.setItem("token", JSON.stringify(token));
@@ -49,6 +50,7 @@ export default function Login() {
             text: "Akun tidak ditemukan. Periksa nomor HP dan password Anda.",
           });
         } else {
+
           const userDoc = querySnapshot.docs[0];
           const userData = userDoc.data();
           const hashedPassword = userData.password;
@@ -65,6 +67,7 @@ export default function Login() {
               const token = {
                 name: userData.name,
                 phone_number: userData.phone_number,
+                email: userData.email,
                 role: userData.role,
               };
               localStorage.setItem("token", JSON.stringify(token));

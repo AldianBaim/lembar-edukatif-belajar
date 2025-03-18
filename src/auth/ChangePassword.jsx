@@ -124,7 +124,7 @@ function ChangePassword() {
             <label className="form-label">Email:</label>
             <input
               type="text"
-              className="form-control"
+              className="form-control border-0 p-3 rounded-4"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -137,7 +137,7 @@ function ChangePassword() {
             <div className="input-group">
               <input
                 type={showOldPassword ? "text" : "password"}
-                className="form-control"
+                className="form-control border-0 p-3 rounded-start-4"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
                 required
@@ -161,7 +161,7 @@ function ChangePassword() {
             <div className="input-group">
               <input
                 type={showNewPassword ? "text" : "password"}
-                className="form-control"
+                className="form-control border-0 p-3 rounded-start-4"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
@@ -185,7 +185,7 @@ function ChangePassword() {
             <div className="input-group">
               <input
                 type={showConfirmNewPassword ? "text" : "password"}
-                className="form-control"
+                className="form-control border-0 p-3 rounded-start-4"
                 value={confirmNewPassword}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
                 required
@@ -206,8 +206,8 @@ function ChangePassword() {
             </div>
           </div>
 
-          <div className="d-grid">
-            <button type="submit" className="btn btn-orange">
+          <div className="d-grid mt-4">
+            <button type="submit" className="btn p-3 rounded-4 btn-orange">
               Update
             </button>
           </div>
