@@ -19,7 +19,7 @@ function App() {
         <h2 className="fw-bold mb-2">Mengenal Alfabet</h2>
         <img
           src="/image/maskot-lembaredukatif.png"
-          width={250}
+          width={230}
           className="mb-3"
           alt=""
         />

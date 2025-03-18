@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router";
 export default function Dashboard() {
   return (
     <Layout>
-      <Link to="/" className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "45px"}}>
+      <Link to="/" className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "27px"}}>
         <img src="/image/arrow-back.svg" width={25}/>
       </Link>
 

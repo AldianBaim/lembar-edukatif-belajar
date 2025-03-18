@@ -25,13 +25,13 @@ function Layout({ children }) {
   };
 
   return (
-    <div className="row justify-content-center p-3 bg-primary position-relative" style={{ minHeight: "100vh" }}>
-      <div className="col-lg-4 py-3">
+    <div className="row justify-content-center p-3 bg-primary position-relative mx-0" style={{ minHeight: "100vh", maxWidth: "100%" }}>
+      <div className="col-lg-4 px-0">
         {isLoggedIn && (
           <div className="text-end">
             <div className="dropdown">
               <button
-                className="btn dropdown"
+                className="btn dropdown px-0"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"

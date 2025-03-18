@@ -108,7 +108,10 @@ function ChangePassword() {
 
   return (
     <Layout>
-      <div className="">
+      <Link to="/" className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "27px"}}>
+				<img src="/image/arrow-back.svg" width={25}/>
+			</Link>
+      <div className="mt-3">
         <div className="text-center mb-3">
           <h4 className="fw-bold">Ganti Password</h4>
           <img
@@ -140,10 +143,11 @@ function ChangePassword() {
                 className="form-control border-0 p-3 rounded-start-4"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
+                placeholder="Masukkan password lama"
                 required
               />
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-orange"
                 type="button"
                 onClick={() => setShowOldPassword(!showOldPassword)}
               >
@@ -164,10 +168,11 @@ function ChangePassword() {
                 className="form-control border-0 p-3 rounded-start-4"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Masukkan password baru"
                 required
               />
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-orange"
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
               >
@@ -188,10 +193,11 @@ function ChangePassword() {
                 className="form-control border-0 p-3 rounded-start-4"
                 value={confirmNewPassword}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
+                placeholder="Ulangi password baru"
                 required
               />
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-orange"
                 type="button"
                 onClick={() =>
                   setShowConfirmNewPassword(!showConfirmNewPassword)
@@ -206,17 +212,17 @@ function ChangePassword() {
             </div>
           </div>
 
-          <div className="d-grid mt-4">
+          <div className="d-grid mt-5">
             <button type="submit" className="btn p-3 rounded-4 btn-orange">
               Update
             </button>
           </div>
         </form>
-        <div className="mt-3 text-center text-dark">
+        {/* <div className="mt-3 text-center text-dark">
           <Link to="/" className="text-dark text-decoration-none">
             Kembali ke Beranda
           </Link>
-        </div>
+        </div> */}
       </div>
     </Layout>
   );

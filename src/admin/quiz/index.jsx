@@ -136,7 +136,7 @@ function QuizzesModule() {
     <Layout>
       <Link
         to="/admin/dashboard"
-        className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "45px"}}
+        className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "27px"}}
       >
         <img src="/image/arrow-back.svg" width={25}/>
       </Link>
