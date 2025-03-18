@@ -16,11 +16,11 @@ function App() {
     <Layout>
       <div className="text-center">
         <h6>Lembar Edukatif</h6>
-        <h2 className="fw-bold mb-5">Mengenal Alfabet</h2>
+        <h2 className="fw-bold mb-2">Mengenal Alfabet</h2>
         <img
           src="/image/maskot-lembaredukatif.png"
           width={250}
-          className="mb-5"
+          className="mb-3"
           alt=""
         />
       </div>
