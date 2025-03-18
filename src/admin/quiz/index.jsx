@@ -136,7 +136,7 @@ function QuizzesModule() {
     <Layout>
       <Link
         to="/admin/dashboard"
-        className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "27px"}}
+        className="text-decoration-none text-primary position-absolute top-0" style={{marginTop: "27px"}}
       >
         <img src="/image/arrow-back.svg" width={25}/>
       </Link>
@@ -149,9 +149,9 @@ function QuizzesModule() {
               setEditMode(false); // Ensure add mode
               resetForm(); // Reset the form
             }}
-            className="btn btn-sm btn-success mb-3"
+            className="btn btn-sm btn-success mb-3 d-flex align-items-center gap-1 ms-auto"
           >
-            Tambah Pertanyaan
+            <i className="bi bi-plus-circle"></i> Tambah Pertanyaan
           </button>
         </div>
 
@@ -273,7 +273,7 @@ function QuizzesModule() {
               <tbody>
                 {quizzes.map((quiz, index) => (
                   <tr key={quiz.id}>
-                    <td>{index + 1}</td>
+                    <td className="text-center">{index + 1}</td>
                     <td>
                       {quiz.question}
                       {quiz.type === "audio" && quiz.embed && (

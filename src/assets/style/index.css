@@ -112,6 +112,14 @@ body {
   animation-delay: 0.06s;
 }
 
+table th {
+  background-color: #EAEAEA !important;
+}
+/* Table rounded */
+table {
+  border-radius: 15px;
+  overflow: hidden;
+}
 
 @keyframes rotate {
   0% {

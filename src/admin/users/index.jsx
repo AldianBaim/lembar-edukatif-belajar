@@ -150,7 +150,7 @@ function UsersModule() {
     <Layout>
       <Link
         to="/admin/dashboard"
-        className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "27px"}}
+        className="text-decoration-none text-primary position-absolute top-0" style={{marginTop: "27px"}}
       >
         <img src="/image/arrow-back.svg" width={25}/>
       </Link>
@@ -163,9 +163,9 @@ function UsersModule() {
               setEditMode(false);
               resetForm();
             }}
-            className="btn btn-sm btn-success mb-3"
+            className="btn btn-sm btn-success mb-3 d-flex align-items-center gap-1 ms-auto"
           >
-            Tambah Pengguna
+            <i className="bi bi-plus-circle"></i> Tambah Pengguna
           </button>
         </div>
 
@@ -254,7 +254,6 @@ function UsersModule() {
                 <tr>
                   <th>No</th>
                   <th>Nama</th>
-                  <th>Phone</th>
                   <th>Role</th>
                   <th>Action</th>
                 </tr>
@@ -262,22 +261,21 @@ function UsersModule() {
               <tbody>
                 {users.map((user, index) => (
                   <tr key={user.id}>
-                    <td>{index + 1}</td>
+                    <td className="text-center">{index + 1}</td>
                     <td>{user.name}</td>
-                    <td>{user.phone}</td>
                     <td>{user.role}</td>
                     <td>
                       <button
                         onClick={() => handleEdit(user)}
-                        className="btn btn-sm btn-primary me-2"
+                        className="btn btn-sm btn-primary me-1"
                       >
-                        Edit
+                        <i className="bi bi-pencil"></i>
                       </button>
                       <button
                         onClick={() => handleDelete(user.id)}
                         className="btn btn-sm btn-danger"
                       >
-                        Hapus
+                        <i className="bi bi-trash"></i>
                       </button>
                     </td>
                   </tr>

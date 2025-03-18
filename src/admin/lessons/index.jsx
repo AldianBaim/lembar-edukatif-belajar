@@ -152,7 +152,7 @@ function LessonsModule() {
     <Layout>
       <Link
         to="/admin/dashboard"
-        className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "27px"}}
+        className="text-decoration-none text-primary position-absolute top-0" style={{marginTop: "27px"}}
       >
         <img src="/image/arrow-back.svg" width={25}/>
       </Link>
@@ -165,12 +165,11 @@ function LessonsModule() {
               setEditMode(false);
               resetForm();
             }}
-            className="btn btn-sm btn-success mb-3"
+            className="btn btn-sm btn-success mb-3 d-flex align-items-center gap-1 ms-auto"
           >
-            Tambah Pelajaran
+            <i className="bi bi-plus-circle"></i> Tambah Pelajaran
           </button>
         </div>
-        ...{" "}
         {showForm && (
           <form onSubmit={handleSubmit} className="card p-4 shadow mb-3">
             {error && <div className="alert alert-danger">{error}</div>}
@@ -258,35 +257,35 @@ function LessonsModule() {
         )}
         {!showForm && (
           <div className="table-responsive">
-            <table className="table mt-3">
+            <table className="table mt-2">
               <thead>
                 <tr>
                   <th>No</th>
                   <th>ID</th>
                   <th>Judul</th>
-                  <th>Tipe</th>
+                  {/* <th>Tipe</th> */}
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {lessons.map((lesson, index) => (
                   <tr key={lesson.id}>
-                    <td>{index + 1}</td>
+                    <td className="text-center">{index + 1}</td>
                     <td>{lesson.id}</td>
-                    <td>{lesson.title}</td>
-                    <td>{lesson.type}</td>
+                    <td width={150}>{lesson.title}</td>
+                    {/* <td>{lesson.type}</td> */}
                     <td>
                       <button
                         onClick={() => handleEdit(lesson)}
-                        className="btn btn-sm btn-primary me-2 mb-1"
+                        className="btn btn-sm btn-primary me-1 mb-1"
                       >
-                        Edit
+                        <i className="bi bi-pencil"></i>
                       </button>
                       <button
                         onClick={() => handleDelete(lesson.id)}
                         className="btn btn-sm btn-danger mb-1"
                       >
-                        Hapus
+                        <i className="bi bi-trash"></i>
                       </button>
                     </td>
                   </tr>
