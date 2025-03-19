@@ -102,37 +102,39 @@ export default function Login() {
 
   return (
     <Layout>
-      <div className="text-center mb-3">
-        <h6>Lembar Edukatif</h6>
-        <img src="/image/maskot-lembaredukatif.png" width={250} alt="Mascot" />
-      </div>
-      <form className="w-100" onSubmit={login}>
-        <div className="form-group mb-3">
-          <input
-            type="tel"
-            className="form-control border-0 p-3 rounded-4"
-            id="phone"
-            placeholder="Masukkan nomor HP"
-            pattern="[0-9]*"
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
+      <section style={{marginTop: "70px"}}>
+        <div className="text-center mb-3">
+          <h6>Lembar Edukatif</h6>
+          <img src="/image/maskot-lembaredukatif.png" width={250} alt="Mascot" />
         </div>
-        <div className="form-group mb-2">
-          <input
-            type="password"
-            className="form-control border-0 p-3 rounded-4"
-            id="password"
-            placeholder="Enter password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn w-100 btn-orange mt-3 rounded-4 p-3">
-          Login
-        </button>
-      </form>
-      <div className="text-center mt-5">Belum punya akun? <a href="https://lembaredukatif.id" className="text-decoration-none fw-bold text-dark">Daftar sekarang</a></div>
+        <form className="w-100" onSubmit={login}>
+          <div className="form-group mb-3">
+            <input
+              type="tel"
+              className="form-control border-0 p-3 rounded-4"
+              id="phone"
+              placeholder="Masukkan nomor HP"
+              pattern="[0-9]*"
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group mb-2">
+            <input
+              type="password"
+              className="form-control border-0 p-3 rounded-4"
+              id="password"
+              placeholder="Enter password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn w-100 btn-orange mt-3 rounded-4 p-3">
+            Login
+          </button>
+        </form>
+        <div className="text-center mt-5">Belum punya akun? <a href="https://lembaredukatif.id" className="text-decoration-none fw-bold text-dark">Daftar sekarang</a></div>
+      </section>
     </Layout>
   );
 }
