@@ -177,8 +177,11 @@ export default function Quiz() {
 
   if (questions.length === 0) {
     return (
-      <div className="text-center">
-        <h3>Loading questions...</h3>
+      <div className="d-flex flex-column gap-3 justify-content-center align-items-center bg-primary" style={{ height: "100vh" }}>
+        <div className="spinner-border text-orange" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <p className="text-orange">Memuat pertanyaan...</p>
       </div>
     );
   }
