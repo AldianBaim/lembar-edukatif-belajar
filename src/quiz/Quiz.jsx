@@ -12,12 +12,34 @@ export default function Quiz() {
   const [score, setScore] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
 
+  const [isPlaying, setIsPlaying] = useState(false);
+  const questionAudioRef = useRef(null);
+
+  // Add effect to handle audio ended
+  useEffect(() => {
+    if (questionAudioRef.current) {
+      questionAudioRef.current.onended = () => setIsPlaying(false);
+    }
+  }, [currentQuestion]);
+
   // Ref untuk audio
   const correctAudio = useRef(null);
   const incorrectAudio = useRef(null);
   const gameStartAudio = useRef(null);
   const nextQuizAudio = useRef(null);
   const congratsAudio = useRef(null);
+
+  // Add this function to handle play/pause
+  const toggleAudio = () => {
+    if (questionAudioRef.current) {
+      if (isPlaying) {
+        questionAudioRef.current.pause();
+      } else {
+        questionAudioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   useEffect(() => {
     let isMounted = true; // Track apakah komponen masih di-mount
@@ -227,11 +249,20 @@ export default function Quiz() {
 
           {/* If exist question type audio */}
           {questions[currentQuestion]?.type === "audio" && (
-            <audio
-              controls
-              src={questions[currentQuestion]?.embed}
-              style={{ width: "100%" }}
-            ></audio>
+            <div className="d-flex justify-content-center align-items-center my-3">
+              <audio
+                ref={questionAudioRef}
+                src={questions[currentQuestion]?.embed}
+                className="d-none"
+              />
+              <button 
+                className="btn btn-lg btn-orange rounded-circle d-flex align-items-center justify-content-center"
+                style={{ width: "60px", height: "60px" }}
+                onClick={toggleAudio}
+              >
+                <i className={`bi ${isPlaying ? 'bi-pause-fill' : 'bi-play-fill'}`} style={{ fontSize: "24px" }}></i>
+              </button>
+            </div>
           )}
 
           {/* If exist question type image */}
