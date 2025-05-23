@@ -303,7 +303,7 @@ export default function Quiz() {
                     : "btn-outline-orange"
                 } ${
                   questions[currentQuestion]?.optionType === "image"
-                    ? "p-0"
+                    ? "p-0 rounded-0 "
                     : ""
                 }`}
                 onClick={() => handleAnswerSelect(option)}
