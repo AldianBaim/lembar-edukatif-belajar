@@ -16,6 +16,7 @@ function QuizzesModule() {
   const [quizzes, setQuizzes] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [title, setTitle] = useState(""); // Tambah state untuk title
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState(["", "", ""]);
   const [correctAnswer, setCorrectAnswer] = useState("");
@@ -44,6 +45,7 @@ function QuizzesModule() {
   }, []);
 
   const resetForm = () => {
+    setTitle(""); // Reset title
     setQuestion("");
     setOptions(["", "", ""]);
     setCorrectAnswer("");
@@ -55,7 +57,7 @@ function QuizzesModule() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!question || options.includes("") || !correctAnswer) {
+    if (!title || !question || options.includes("") || !correctAnswer) {
       setError("Mohon lengkapi semua data!");
       return;
     }
@@ -63,6 +65,7 @@ function QuizzesModule() {
     try {
       if (editMode) {
         await updateDoc(doc(db, "quizzes", currentId), {
+          title,
           question,
           options,
           correctAnswer,
@@ -73,6 +76,7 @@ function QuizzesModule() {
         Swal.fire("Berhasil!", "Pertanyaan berhasil diubah.", "success");
       } else {
         await addDoc(collection(db, "quizzes"), {
+          title,
           question,
           options,
           correctAnswer,
@@ -97,6 +101,7 @@ function QuizzesModule() {
     setEditMode(true);
     setShowForm(true);
     setCurrentId(quiz.id);
+    setTitle(quiz.title);
     setQuestion(quiz.question);
     setOptions(quiz.options);
     setCorrectAnswer(quiz.correctAnswer);
@@ -158,6 +163,17 @@ function QuizzesModule() {
         {showForm && (
           <form onSubmit={handleSubmit} className="card p-4 shadow mb-3">
             {error && <div className="alert alert-danger">{error}</div>}
+            <div className="mb-3">
+              <label className="form-label">Judul Quiz:</label>
+              <input
+                type="text"
+                className="form-control"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                placeholder="Input judul quiz"
+              />
+            </div>
             <div className="mb-3">
               <label className="form-label">Pertanyaan:</label>
               <input
@@ -266,7 +282,7 @@ function QuizzesModule() {
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Pertanyaan</th>
+                  <th>Judul</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -274,17 +290,7 @@ function QuizzesModule() {
                 {quizzes.map((quiz, index) => (
                   <tr key={quiz.id}>
                     <td className="text-center">{index + 1}</td>
-                    <td>
-                      {quiz.question}
-                      {quiz.type === "audio" && quiz.embed && (
-                        <div className="mt-2">
-                          <audio controls>
-                            <source src={quiz.embed} type="audio/mpeg" />
-                            Your browser does not support the audio element.
-                          </audio>
-                        </div>
-                      )}
-                    </td>
+                    <td>{quiz.title}</td>
                     <td width={100}>
                       <button
                         onClick={() => handleEdit(quiz)}

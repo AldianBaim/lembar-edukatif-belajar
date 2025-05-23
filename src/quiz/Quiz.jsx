@@ -177,7 +177,10 @@ export default function Quiz() {
 
   if (questions.length === 0) {
     return (
-      <div className="d-flex flex-column gap-3 justify-content-center align-items-center bg-primary" style={{ height: "100vh" }}>
+      <div
+        className="d-flex flex-column gap-3 justify-content-center align-items-center bg-primary"
+        style={{ height: "100vh" }}
+      >
         <div className="spinner-border text-orange" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
@@ -214,8 +217,12 @@ export default function Quiz() {
         src="/audio/congrats.mp3"
         preload="auto"
       ></audio>
-      <Link to="/" className="text-decoration-none text-primary position-absolute top-0 ms-2" style={{marginTop: "27px"}}>
-        <img src="/image/arrow-back.svg" width={25}/>
+      <Link
+        to="/"
+        className="text-decoration-none text-primary position-absolute top-0 ms-2"
+        style={{ marginTop: "27px" }}
+      >
+        <img src="/image/arrow-back.svg" width={25} />
       </Link>
       {!isFinished ? (
         <div className="mt-3 card bg-primary p-1 border-0">
@@ -227,7 +234,7 @@ export default function Quiz() {
               className="progress mt-3"
               role="progressbar"
               aria-label="Basic example"
-              style={{backgroundColor: "#D9D9D9", height: "10px"}}
+              style={{ backgroundColor: "#D9D9D9", height: "10px" }}
             >
               <div
                 className="progress-bar bg-orange"
@@ -258,12 +265,17 @@ export default function Quiz() {
                 src={questions[currentQuestion]?.embed}
                 className="d-none"
               />
-              <button 
+              <button
                 className="btn btn-lg btn-orange rounded-circle d-flex align-items-center justify-content-center"
                 style={{ width: "60px", height: "60px" }}
                 onClick={toggleAudio}
               >
-                <i className={`bi ${isPlaying ? 'bi-pause-fill' : 'bi-play-fill'}`} style={{ fontSize: "24px" }}></i>
+                <i
+                  className={`bi ${
+                    isPlaying ? "bi-pause-fill" : "bi-play-fill"
+                  }`}
+                  style={{ fontSize: "24px" }}
+                ></i>
               </button>
             </div>
           )}
@@ -276,7 +288,7 @@ export default function Quiz() {
               alt={questions[currentQuestion]?.question}
             />
           )}
-          
+
           <h5 className="my-4 text-muted">
             {questions[currentQuestion].question}
           </h5>
@@ -289,11 +301,15 @@ export default function Quiz() {
                   selectedAnswer === option
                     ? "btn-orange"
                     : "btn-outline-orange"
+                } ${
+                  questions[currentQuestion]?.optionType === "image"
+                    ? "p-0"
+                    : ""
                 }`}
                 onClick={() => handleAnswerSelect(option)}
               >
                 {questions[currentQuestion]?.optionType === "image" ? (
-                  <img src={option} width={100} />
+                  <img src={option} className="w-100" />
                 ) : (
                   option
                 )}
