@@ -33,7 +33,9 @@ function QuizzesModule() {
         id: doc.id,
         ...doc.data(),
       }));
-      setQuizzes(quizData);
+      // Mengurutkan quiz berdasarkan judul secara ascending
+      const sortedQuizData = quizData.sort((a, b) => a.title.localeCompare(b.title));
+      setQuizzes(sortedQuizData);
     } catch (error) {
       console.error("Error fetching questions:", error);
       setError("Gagal memuat pertanyaan.");
