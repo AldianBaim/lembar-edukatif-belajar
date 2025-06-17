@@ -61,9 +61,9 @@ function Detail() {
 			<div>
 				{
 					lesson?.type === "video" && (
-						<video className="w-100 mb-3 mt-3" height="240" controls>
-							<source src={lesson?.source} type="video/mp4"/>
-						</video>
+						<div class="ratio ratio-16x9 mt-3 mb-3">
+							<iframe src={`https://www.youtube.com/embed/${lesson?.source}`} title="YouTube video" allowfullscreen></iframe>
+						</div>
 					)
 				}
 
