@@ -1,6 +1,6 @@
 {
-  "name": "Lembar Edukatif",
-  "short_name": "Lembar Edukatif",
+  "name": "LembarEdukatif",
+  "short_name": "LembarEdukatif",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

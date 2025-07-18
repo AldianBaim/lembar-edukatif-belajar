@@ -31,7 +31,7 @@ const LoadingScreen = () => (
 );
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <Suspense fallback={<LoadingScreen />}>
       <BrowserRouter>
         <Routes>
@@ -63,5 +63,5 @@ createRoot(document.getElementById("root")).render(
         </Routes>
       </BrowserRouter>
     </Suspense>
-  </StrictMode>
+  // </StrictMode>
 );

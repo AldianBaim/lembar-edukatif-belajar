@@ -15,7 +15,7 @@ function App() {
   return (
     <Layout>
       <div className="text-center">
-        <h6>Lembar Edukatif</h6>
+        <h6>LembarEdukatif</h6>
         <h2 className="fw-bold mb-2">Mengenal Alfabet</h2>
         <img
           src="/image/maskot-lembaredukatif.png"

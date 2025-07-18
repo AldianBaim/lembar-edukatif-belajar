@@ -104,7 +104,7 @@ export default function Login() {
     <Layout>
       <section style={{marginTop: "70px"}}>
         <div className="text-center mb-3">
-          <h6>Lembar Edukatif</h6>
+          <h6>LembarEdukatif</h6>
           <img src="/image/maskot-lembaredukatif.png" width={250} alt="Mascot" />
         </div>
         <form className="w-100" onSubmit={login}>

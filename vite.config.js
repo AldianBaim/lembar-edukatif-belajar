@@ -12,9 +12,9 @@ export default defineConfig({
         enabled: true,
       },
       manifest: {
-        name: "Lembar Edukatif Belajar",
-        short_name: "Lembar Edukatif",
-        description: "Aplikasi Lembar Edukatif dengan PWA",
+        name: "LembarEdukatif Belajar",
+        short_name: "LembarEdukatif",
+        description: "Aplikasi LembarEdukatif dengan PWA",
         theme_color: "#ffffff",
         background_color: "#ffffff",
         display: "standalone",

@@ -8,11 +8,11 @@ import { db } from '../firebase'; // Make sure this path is correct
 
 function Learn() {
   const videoRef = useRef(null);
+  const qrScannerRef = useRef(null); // Ref untuk menyimpan QrScanner
   const [qrResult, setQrResult] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const fetchDetail = async (lessonId) => {
     setLoading(true);
     try {
@@ -44,20 +44,10 @@ function Learn() {
   useEffect(() => {
     async function checkPermissionsAndStart() {
       try {
-        const permission = await navigator.permissions.query({
-          name: "camera",
-        });
-
+        const permission = await navigator.permissions.query({ name: "camera" });
         if (permission.state === "denied") {
-          setError(
-            "Akses kamera ditolak! Harap izinkan akses di pengaturan browser."
-          );
-          Swal.fire({
-            icon: 'warning',
-            title: 'Akses Kamera Ditolak',
-            text: 'Harap izinkan akses di pengaturan perangkat.',
-            confirmButtonColor: '#3085d6',
-          });
+          setError("Akses kamera ditolak! Harap izinkan akses di pengaturan browser.");
+          Swal.fire({ icon: 'warning', title: 'Akses Kamera Ditolak', text: 'Harap izinkan akses di pengaturan perangkat.' });
           return;
         }
 
@@ -65,11 +55,8 @@ function Learn() {
           const qrScanner = new QrScanner(
             videoRef.current,
             (result) => {
-              console.log("Decoded QR Code:", result.data);
               setQrResult(result.data);
-              if (result.data) {
-                fetchDetail(result.data);
-              }
+              if (result.data) fetchDetail(result.data);
             },
             {
               returnDetailedScanResult: true,
@@ -79,23 +66,29 @@ function Learn() {
               maxScansPerSecond: 1,
             }
           );
-
+          qrScannerRef.current = qrScanner;
           qrScanner.start();
-
-          return () => qrScanner.stop();
         }
       } catch (err) {
         setError("Browser tidak mendukung izin kamera atau akses ditolak.");
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Browser tidak mendukung izin kamera atau akses ditolak.',
-          confirmButtonColor: '#3085d6',
-        });
+        Swal.fire({ icon: 'error', title: 'Error', text: 'Browser tidak mendukung izin kamera atau akses ditolak.' });
       }
     }
 
     checkPermissionsAndStart();
+
+    // Cleanup: pastikan kamera dan scanner dimatikan!
+    return () => {
+      if (qrScannerRef.current) {
+        qrScannerRef.current.stop();
+        qrScannerRef.current.destroy?.(); // Jika library mendukung destroy
+      }
+      if (videoRef.current && videoRef.current.srcObject) {
+        // Hentikan semua track video
+        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+        videoRef.current.srcObject = null;
+      }
+    };
   }, []);
 
   return (
