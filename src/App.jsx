@@ -30,7 +30,7 @@ function App() {
           className="btn border-0 p-3 py-5 px-5 w-100 w-lg-75 mx-auto mb-3"
           style={{ borderRadius: "20px", backgroundColor: "#A1C265" }}
         >
-          <div className="text-white">BELAJAR</div>
+          <div className="text-white">SCAN KARTU</div>
         </button>
       </Link>
 
