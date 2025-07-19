@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/global/Layout";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { db } from "../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 
 export default function Login() {
-  const [phone, setPhone] = useState("");
+
+  // Credential include email or phone number
+  const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -20,7 +22,10 @@ export default function Login() {
   const login = async (event) => {
     event.preventDefault();
 
-    if (phone === "085624865065" && password === "admin") {
+    // Bypass admin login
+    const isAdminLogin = (credential === "admin@gmail.com" || credential === "085624865065") && password === "admin";
+    
+    if (isAdminLogin) {
       Swal.fire({
         icon: "success",
         title: "Login Berhasil",
@@ -39,18 +44,23 @@ export default function Login() {
       });
     } else {
       try {
+        // Detect credential is email or phone number
+        const isEmail = credential.includes('@');
+        const fieldToQuery = isEmail ? 'email' : 'phone_number';
+
         const usersRef = collection(db, "users");
-        const q = query(usersRef, where("phone_number", "==", phone));
+
+        // Dynamic query based on credential to firestore
+        const q = query(usersRef, where(fieldToQuery, "==", credential));
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
           Swal.fire({
             icon: "error",
             title: "Login Gagal",
-            text: "Akun tidak ditemukan. Periksa nomor HP dan password Anda.",
+            text: "Akun tidak ditemukan. Periksa Email/Nomor HP dan Password Anda.",
           });
         } else {
-
           const userDoc = querySnapshot.docs[0];
           const userData = userDoc.data();
           const hashedPassword = userData.password;
@@ -102,7 +112,7 @@ export default function Login() {
 
   return (
     <Layout>
-      <section style={{marginTop: "70px"}}>
+      <section style={{ marginTop: "70px" }}>
         <div className="text-center mb-3">
           <h6>LembarEdukatif</h6>
           <img src="/image/maskot-lembaredukatif.png" width={250} alt="Mascot" />
@@ -110,12 +120,11 @@ export default function Login() {
         <form className="w-100" onSubmit={login}>
           <div className="form-group mb-3">
             <input
-              type="tel"
+              type="text"
               className="form-control border-0 p-3 rounded-4"
-              id="phone"
-              placeholder="Masukkan nomor HP"
-              pattern="[0-9]*"
-              onChange={(e) => setPhone(e.target.value)}
+              id="credential"
+              placeholder="Masukkan Email atau Nomor HP"
+              onChange={(e) => setCredential(e.target.value)}
               required
             />
           </div>
@@ -133,7 +142,9 @@ export default function Login() {
             Login
           </button>
         </form>
-        <div className="text-center mt-5">Belum punya akun? <a href="https://lembaredukatif.id" className="text-decoration-none fw-bold text-dark">Daftar sekarang</a></div>
+        <div className="text-center mt-5">
+          Belum punya akun? <a href="https://lembaredukatif.id" className="text-decoration-none fw-bold text-dark">Daftar sekarang</a>
+        </div>
       </section>
     </Layout>
   );
