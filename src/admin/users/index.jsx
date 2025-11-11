@@ -19,7 +19,7 @@ function UsersModule() {
   const [editMode, setEditMode] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
   const [currentId, setCurrentId] = useState(null);
@@ -46,7 +46,7 @@ function UsersModule() {
   const resetForm = () => {
     setName("");
     setEmail("");
-    setPhone("");
+    setUserId("");
     setPassword("");
     setRole("user");
     setError(null);
@@ -54,7 +54,7 @@ function UsersModule() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !email || !phone || !role) {
+    if (!name || !email || !userId || !role) {
       setError("Mohon lengkapi semua data (kecuali password saat update)!");
       return;
     }
@@ -68,7 +68,7 @@ function UsersModule() {
       let userDataToUpdate = {
         name,
         email,
-        phone_number: phone,
+        user_id: userId,
         role,
         updated_at: new Date(),
       };
@@ -90,7 +90,7 @@ function UsersModule() {
         userDataToUpdate = {
           name,
           email,
-          phone_number: phone,
+          user_id: userId,
           password: hashedPassword,
           role,
           created_at: new Date(),
@@ -99,6 +99,7 @@ function UsersModule() {
         await addDoc(collection(db, "users"), userDataToUpdate);
         Swal.fire("Berhasil!", "Pengguna berhasil ditambahkan.", "success");
       }
+
       await fetchUsers(); // Reload data
       setShowForm(false);
       setEditMode(false);
@@ -116,7 +117,7 @@ function UsersModule() {
     setCurrentId(user.id);
     setName(user.name);
     setEmail(user.email);
-    setPhone(user.phone_number || "");
+    setUserId(user.user_id || "");
     setRole(user.role);
     setPassword("");
   };
@@ -150,9 +151,10 @@ function UsersModule() {
     <Layout>
       <Link
         to="/admin/dashboard"
-        className="text-decoration-none text-primary position-absolute top-0" style={{marginTop: "27px"}}
+        className="text-decoration-none text-primary position-absolute top-0"
+        style={{ marginTop: "27px" }}
       >
-        <img src="/image/arrow-back.svg" width={25}/>
+        <img src="/image/arrow-back.svg" width={25} alt="Back" />
       </Link>
       <div className="mt-3">
         <h3 className="mb-4">Kelola Pengguna</h3>
@@ -172,17 +174,19 @@ function UsersModule() {
         {showForm && (
           <form onSubmit={handleSubmit} className="card p-4 shadow mb-3">
             {error && <div className="alert alert-danger">{error}</div>}
+
             <div className="mb-3">
-              <label className="form-label">Name:</label>
+              <label className="form-label">Nama:</label>
               <input
                 type="text"
                 className="form-control"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                placeholder="Input name"
+                placeholder="Input nama"
               />
             </div>
+
             <div className="mb-3">
               <label className="form-label">Email:</label>
               <input
@@ -194,18 +198,19 @@ function UsersModule() {
                 placeholder="Input email"
               />
             </div>
+
             <div className="mb-3">
-              <label className="form-label">Phone Number:</label>
+              <label className="form-label">User ID:</label>
               <input
-                type="tel"
+                type="text"
                 className="form-control"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
                 required
-                placeholder="Input phone number"
-                pattern="[0-9]*"
+                placeholder="Input user ID (contoh: AnakPintar123)"
               />
             </div>
+
             <div className="mb-3">
               <label className="form-label">Password:</label>
               <input
@@ -214,9 +219,10 @@ function UsersModule() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Input password"
-                required={!editMode} // Password wajib saat tambah
+                required={!editMode}
               />
             </div>
+
             <div className="mb-3">
               <label className="form-label">Role:</label>
               <select
@@ -254,6 +260,7 @@ function UsersModule() {
                 <tr>
                   <th>No</th>
                   <th>Nama</th>
+                  <th>User ID</th>
                   <th>Role</th>
                   <th>Action</th>
                 </tr>
@@ -263,6 +270,7 @@ function UsersModule() {
                   <tr key={user.id}>
                     <td className="text-center">{index + 1}</td>
                     <td>{user.name}</td>
+                    <td>{user.user_id}</td>
                     <td>{user.role}</td>
                     <td>
                       <button

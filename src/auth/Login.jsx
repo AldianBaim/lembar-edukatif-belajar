@@ -7,8 +7,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 
 export default function Login() {
-
-  // Credential include email or phone number
+  // Credential include email or user_id
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -23,8 +22,8 @@ export default function Login() {
     event.preventDefault();
 
     // Bypass admin login
-    const isAdminLogin = (credential === "admin@gmail.com" || credential === "085624865065") && password === "admin";
-    
+    const isAdminLogin = (credential === "admin@gmail.com" || credential === "admin001") && password === "admin";
+
     if (isAdminLogin) {
       Swal.fire({
         icon: "success",
@@ -35,7 +34,7 @@ export default function Login() {
       }).then(() => {
         const token = {
           name: "Admin",
-          phone_number: "085624865066",
+          user_id: "admin001",
           email: "admin@gmail.com",
           role: "admin",
         };
@@ -44,9 +43,9 @@ export default function Login() {
       });
     } else {
       try {
-        // Detect credential is email or phone number
-        const isEmail = credential.includes('@');
-        const fieldToQuery = isEmail ? 'email' : 'phone_number';
+        // Detect credential is email or user_id
+        const isEmail = credential.includes("@");
+        const fieldToQuery = isEmail ? "email" : "user_id";
 
         const usersRef = collection(db, "users");
 
@@ -58,7 +57,7 @@ export default function Login() {
           Swal.fire({
             icon: "error",
             title: "Login Gagal",
-            text: "Akun tidak ditemukan. Periksa Email/Nomor HP dan Password Anda.",
+            text: "Akun tidak ditemukan. Periksa Email/User ID dan Password Anda.",
           });
         } else {
           const userDoc = querySnapshot.docs[0];
@@ -76,7 +75,7 @@ export default function Login() {
             } else if (result === true) {
               const token = {
                 name: userData.name,
-                phone_number: userData.phone_number,
+                user_id: userData.user_id,
                 email: userData.email,
                 role: userData.role,
               };
@@ -123,7 +122,7 @@ export default function Login() {
               type="text"
               className="form-control border-0 p-3 rounded-4"
               id="credential"
-              placeholder="Masukkan Email atau Nomor HP"
+              placeholder="Masukkan Email atau User ID"
               onChange={(e) => setCredential(e.target.value)}
               required
             />
@@ -143,7 +142,13 @@ export default function Login() {
           </button>
         </form>
         <div className="text-center mt-5">
-          Belum punya akun? <a href="https://lembaredukatif.id" className="text-decoration-none fw-bold text-dark">Daftar sekarang</a>
+          Belum punya akun?{" "}
+          <a
+            href="https://lembaredukatif.id"
+            className="text-decoration-none fw-bold text-dark"
+          >
+            Daftar sekarang
+          </a>
         </div>
       </section>
     </Layout>

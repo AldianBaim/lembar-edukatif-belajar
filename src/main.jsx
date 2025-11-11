@@ -21,7 +21,7 @@ import ProtectedRoute from "./auth/ProtectedRoute.jsx";
 import UsersModule from "./admin/users/index.jsx";
 import LessonsModule from "./admin/lessons/index.jsx";
 import ForgotPassword from "./auth/ForgotPassword.jsx";
-import ChangePassword from "./auth/ChangePassword.jsx";
+import ChangeProfile from "./auth/ChangeProfile.jsx";
 
 const LoadingScreen = () => (
   <div className="loading-container">
@@ -37,7 +37,7 @@ createRoot(document.getElementById("root")).render(
         <Routes>
           {/* Rute login yang tidak dilindungi */}
           <Route path="/login" element={<Login />} />
-          <Route path="/change-password" element={<ChangePassword />} />
+          <Route path="/change-profile" element={<ChangeProfile />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/admin/dashboard/users" element={<UsersModule />} />
           {/* Semua rute lainnya dilindungi */}

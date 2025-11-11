@@ -41,10 +41,10 @@ function Layout({ children }) {
               <ul className="dropdown-menu bg-orange">
                 <li className="border-bottom">
                   <Link
-                    to="/change-password"
+                    to="/change-profile"
                     className="dropdown-item text-decoration-none text-white"
                   >
-                    Ganti Password
+                    Ganti Profil & Password
                   </Link>
                 </li>
                 <li>
