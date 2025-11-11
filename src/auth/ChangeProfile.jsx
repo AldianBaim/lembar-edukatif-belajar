@@ -101,7 +101,7 @@ function ChangeProfile() {
         });
 
         Swal.fire("Berhasil!", "Profil dan password berhasil diperbarui.", "success");
-        setMessage("Profil dan password berhasil diperbarui.");
+        // setMessage("Profil dan password berhasil diperbarui.");
       } else {
         // Hanya update nama
         await updateDoc(userRef, {
@@ -109,7 +109,7 @@ function ChangeProfile() {
         });
 
         Swal.fire("Berhasil!", "Nama berhasil diperbarui.", "success");
-        setMessage("Nama berhasil diperbarui.");
+        // setMessage("Nama berhasil diperbarui.");
       }
 
     } catch (error) {
