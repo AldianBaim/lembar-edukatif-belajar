@@ -36,6 +36,12 @@ function UsersModule() {
         id: doc.id,
         ...doc.data(),
       }));
+      // Sort by User ID
+      usersData.sort((a, b) => {
+        const userIdA = a.user_id || "";
+        const userIdB = b.user_id || "";
+        return userIdA.localeCompare(userIdB);
+      });
       setUsers(usersData);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -54,8 +60,8 @@ function UsersModule() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !email || !userId || !role) {
-      setError("Mohon lengkapi semua data (kecuali password saat update)!");
+    if (!name || !userId || !role) {
+      setError("Mohon lengkapi data User ID, Nama, dan Role!");
       return;
     }
 
@@ -157,7 +163,8 @@ function UsersModule() {
         <img src="/image/arrow-back.svg" width={25} alt="Back" />
       </Link>
       <div className="mt-3">
-        <h3 className="mb-4">Kelola Pengguna</h3>
+        <h3 className="mb-2">Kelola Pengguna</h3>
+        <p className="text-muted mb-4">Total Pengguna: <strong>{users.length}</strong></p>
         <div className="text-end">
           <button
             onClick={() => {
@@ -174,6 +181,19 @@ function UsersModule() {
         {showForm && (
           <form onSubmit={handleSubmit} className="card p-4 shadow mb-3">
             {error && <div className="alert alert-danger">{error}</div>}
+
+            <div className="mb-3">
+              <label className="form-label">User ID:</label>
+              <input
+                type="text"
+                className="form-control"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+                required
+                placeholder="Input user ID (contoh: AnakPintar123)"
+                autoComplete="off"
+              />
+            </div>
 
             <div className="mb-3">
               <label className="form-label">Nama:</label>
@@ -194,20 +214,7 @@ function UsersModule() {
                 className="form-control"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="Input email"
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">User ID:</label>
-              <input
-                type="text"
-                className="form-control"
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)}
-                required
-                placeholder="Input user ID (contoh: AnakPintar123)"
+                placeholder="Input email (opsional)"
               />
             </div>
 
@@ -220,6 +227,7 @@ function UsersModule() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Input password"
                 required={!editMode}
+                autoComplete="new-password"
               />
             </div>
 
@@ -259,8 +267,8 @@ function UsersModule() {
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Nama</th>
                   <th>User ID</th>
+                  <th>Nama</th>
                   <th>Role</th>
                   <th>Action</th>
                 </tr>
@@ -269,8 +277,8 @@ function UsersModule() {
                 {users.map((user, index) => (
                   <tr key={user.id}>
                     <td className="text-center">{index + 1}</td>
-                    <td>{user.name}</td>
                     <td>{user.user_id}</td>
+                    <td>{user.name}</td>
                     <td>{user.role}</td>
                     <td>
                       <button

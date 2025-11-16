@@ -39,8 +39,8 @@ createRoot(document.getElementById("root")).render(
           <Route path="/login" element={<Login />} />
           <Route path="/change-profile" element={<ChangeProfile />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/admin/dashboard/users" element={<UsersModule />} />
-          {/* Semua rute lainnya dilindungi */}
+          
+          {/* Rute umum yang membutuhkan autentikasi */}
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<App />} />
             <Route path="/learn" element={<Learn />} />
@@ -48,17 +48,15 @@ createRoot(document.getElementById("root")).render(
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/quiz/add" element={<AddQuestion />} />
             <Route path="/learn/:slug" element={<Detail />} />
-            <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route
-              path="/admin/dashboard/quizzes"
-              element={<QuizzesModule />}
-            />
-            <Route path="/admin/dashboard/users" element={<UsersModule />} />
-            <Route
-              path="/admin/dashboard/lessons"
-              element={<LessonsModule />}
-            />
             <Route path="*" element={<NotFound />} />
+          </Route>
+          
+          {/* Rute admin yang membutuhkan role admin */}
+          <Route element={<ProtectedRoute adminOnly={true} />}>
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/dashboard/quizzes" element={<QuizzesModule />} />
+            <Route path="/admin/dashboard/users" element={<UsersModule />} />
+            <Route path="/admin/dashboard/lessons" element={<LessonsModule />} />
           </Route>
         </Routes>
       </BrowserRouter>

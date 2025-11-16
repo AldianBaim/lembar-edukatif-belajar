@@ -5,10 +5,19 @@ import { useEffect, useState } from "react";
 function App() {
   const [showAdmin, setShowAdmin] = useState(false);
   const navigate = useNavigate();
-  // Check localstorage]
+  // Check localstorage
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("token")).role == "admin") {
-      setShowAdmin(true);
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const userData = JSON.parse(token);
+        if (userData.role === "admin") {
+          setShowAdmin(true);
+        }
+      }
+    } catch (error) {
+      console.error("Error parsing token:", error);
+      setShowAdmin(false);
     }
   }, []);
 
